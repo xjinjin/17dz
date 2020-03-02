@@ -1,0 +1,76 @@
+
+请求路径为 url: /task,
+
+请求方式为 methods: POST,
+
+数据类型 contentType: json,
+
+参数 {
+		'login_info': {},
+		'zt': [''],
+		'db_name': ''
+	}
+
+
+说明：1.当访问云代账的时候，参数data中的 login_info:{'qyh':'','account':'','password':''} 需要增加一个企业号的参数。
+
+2.当访问会算账的时候，参数中的 login_info:{'account':'','password':''}
+
+3.db_name 目前可供使用的数据库名称为 yundaizhang（云代账） 和 kungeek（慧算账）、17DZ（亿企代帐）、yunzhangfang（云账房）
+
+
+Mongodb 用户名密码
+
+116和243的服务器  admin : 用户名：cicjust  密码 : cicjust123;
+         kungeek : 用户名： kungeek  密码: kungeek123;
+         17DZ : 用户名: 17DZ 密码: 17DZ123;
+         yunzhangfang 用户名: YZF 密码:yunzhangfang123;
+         yundaizhang 用户名:YDZ  密码:yundaizhang123;
+
+
+
+=============================================================================================
+
+
+#数据存储表
+CREATE TABLE export_tasks
+(
+    id BIGINT(20) PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    site VARCHAR(255) COMMENT '站点',
+    account VARCHAR(255) COMMENT '站点登陆名',
+    zt_id BIGINT(20) NOT NULL COMMENT '账套id',
+    infoname_id BIGINT(20) NOT NULL COMMENT '项目名称id',
+    infodata LONGTEXT COMMENT '数据串json',
+    kjqj CHAR(6) COMMENT '会计期间',
+    CONSTRAINT export_tasks_zt_id_fk FOREIGN KEY (zt_id) REFERENCES zt (id),
+    CONSTRAINT export_tasks_infoname_id_fk FOREIGN KEY (infoname_id) REFERENCES infoname (id)
+);
+CREATE UNIQUE INDEX export_tasks_id_uindex ON export_tasks (id);
+CREATE INDEX export_tasks_infoname_id_fk ON export_tasks (infoname_id);
+CREATE INDEX export_tasks_zt_id_fk ON export_tasks (zt_id);
+
+说明：所有的站点名称 kungeek(慧算账)、yunzhangfang(云账房)、17DZ(亿企代)
+
+
+#账套名称表，账套导出进度
+CREATE TABLE zt
+(
+    id BIGINT(20) PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    ztname VARCHAR(255) COMMENT '账套名称',
+    site VARCHAR(255) COMMENT '站点名称',
+    start_time VARCHAR(255) COMMENT '账套开始导出时间',
+    finished_time VARCHAR(255) COMMENT '账套导出结束时间',
+    status VARCHAR(255) COMMENT '账套导出进度'
+);
+CREATE UNIQUE INDEX zt_id_uindex ON zt (id);
+
+
+#需导出的项目名称表
+CREATE TABLE infoname
+(
+    id BIGINT(20) PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    infoname VARCHAR(255) COMMENT '项目名称',
+    site VARCHAR(255) COMMENT '站点名称'
+);
+CREATE UNIQUE INDEX infoname_id_uindex ON infoname (id);
+
