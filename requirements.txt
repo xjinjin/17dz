@@ -35,7 +35,7 @@ python-dateutil==2.7.3
 pytz==2018.7
 raven==6.10.0
 redis==2.10.6
-requests==2.19.1
+requests==2.20.0
 requests-futures==0.9.8
 requests-toolbelt==0.8.0
 rpyc==4.0.2
