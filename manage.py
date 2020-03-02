@@ -13,9 +13,9 @@ from raven.contrib.flask import Sentry
 from config import Config
 # from public.docker_for_browsers import DockerForBrowsers
 
-from App import app
+from App import app          # falsk
 #使用sentry监听异常
-from task.main import export_tasks
+from task.main import export_tasks     # celely
 
 sentry = Sentry(app, dsn='https://cc465b09e4004bd790db724a7d4252eb:6f73513a850d4e26b34612de0a08f7c9@192.168.20.244:9000//6')
 
