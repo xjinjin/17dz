@@ -14,7 +14,7 @@ cycler==0.10.0
 Flask==0.10.1
 Flask-Cors==3.0.7
 Flask-SQLAlchemy==2.3.2
-flower==0.9.3
+flower==1.2.0
 gunicorn==19.9.0
 idna==2.7
 itsdangerous==0.24
